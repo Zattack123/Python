@@ -3,11 +3,11 @@ import pandas as pd
 import statistics as stat
 
 
-def printRollListStats(rollList):
-    rollList.sort()
-    rollTot = sum(rollList)
-    rollAvg = rollTot/dieNumb
-    rollMode = stat.mode(rollList)
+def printRollListStats(rollListDict):
+    rollListDict["rollList"].sort()
+    rollListDict["rollTot"] = sum(rollListDict["rollList"])
+    rollListDict["rollAvg"] = rollListDict["rollTot"]/rollListDict["dieNumb"]
+    rollListDict["rollMode"] = stat.mode(rollListDict["rollList"])
     rollMedian = stat.median(rollList)
     print("Total amount Rolled: "+ str(rollTot))
     print("Average # Rolled: " + str(rollAvg))
@@ -17,13 +17,14 @@ def printRollListStats(rollList):
 
 
 def roll(dieNumb, size):
-    rollList = []
+    rollListDict = {"dieNumb": dieNumb, "size": size, "rollList": []}
+    #rollListDict["rollList"] = []
     for x in range(0,dieNumb):
         roll = random.randint(1,size)
         #doubleRoll = (random.randint(1,6),random.randint(1,6))
         #rollTot += (doubleRoll[0] + doubleRoll[1])
-        rollList.append(roll)
-    return rollList
+        rollListDict["rollList"].append(roll)
+    return rollListDict
 
 def dropRoll(rollList, dropNum):
     for x in range(0,dropNum):
@@ -36,8 +37,8 @@ if __name__ == "__main__":
         dice = dice.split('d')
         dieNumb = int(dice[0])
         size = int(dice[1])
-        newRollList = roll(dieNumb, size)
-        printRollListStats(newRollList)
-        dropRoll(newRollList, 1)
-        printRollListStats(newRollList)
+        newRollListDict = roll(dieNumb, size)
+        printRollListStats(newRollListDict)
+        #dropRoll(newRollList, 1)
+        #printRollListStats(newRollList)
         dice = input("\nWhat would you like to roll? (xdy)\n")
