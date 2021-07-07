@@ -44,14 +44,15 @@ if __name__ == "__main__":
         newRollListDict = roll(dieNumb, size)
         printFlag = input("\nPrint? (y/n) ")
         if((printFlag=="y") or (printFlag=="Y")):
-            printFlag2 = 1
+            printFlag2 = True
         else:
-            printFlag2 = 0
+            printFlag2 = False
         updateRollListStats(newRollListDict, printFlag2)
         dropNum = input("Drop any Dice? ")
+        dropNum = int(dropNum)
         if(dropNum):
-            dropRoll(newRollListDict, int(dropNum))
-            updateRollListStats(newRollListDict, printFlag2)
+            dropRoll(newRollListDict, dropNum)
+            updateRollListStats(newRollListDict, True)
         #print(newRollListDict.items())
         dice = input("\nWhat would you like to roll? (xdy)\n")
     print("Bye!")
