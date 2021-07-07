@@ -3,22 +3,21 @@ import pandas as pd
 import statistics as stat
 
 
-def printRollListStats(rollListDict):
+def updateRollListStats(rollListDict):
     rollListDict["rollList"].sort()
     rollListDict["rollTot"] = sum(rollListDict["rollList"])
     rollListDict["rollAvg"] = rollListDict["rollTot"]/rollListDict["dieNumb"]
     rollListDict["rollMode"] = stat.mode(rollListDict["rollList"])
-    rollMedian = stat.median(rollList)
-    print("Total amount Rolled: "+ str(rollTot))
-    print("Average # Rolled: " + str(rollAvg))
-    print("Most Common Roll: " + str(rollMode))
-    print("Middle Roll: " + str(rollMedian))
-    print("Your Rolls: "+ str(rollList)+"\n")
+    rollListDict["rollMedian"] = stat.median(rollListDict["rollList"])
+    print("Total amount Rolled: "+ str(rollListDict["rollTot"]))
+    print("Average # Rolled: " + str(rollListDict["rollAvg"]))
+    print("Most Common Roll: " + str(rollListDict["rollMode"]))
+    print("Middle Roll: " + str(rollListDict["rollMedian"]))
+    print("Your Rolls: "+ str(rollListDict["rollList"])+"\n")
 
 
 def roll(dieNumb, size):
     rollListDict = {"dieNumb": dieNumb, "size": size, "rollList": []}
-    #rollListDict["rollList"] = []
     for x in range(0,dieNumb):
         roll = random.randint(1,size)
         #doubleRoll = (random.randint(1,6),random.randint(1,6))
@@ -26,9 +25,12 @@ def roll(dieNumb, size):
         rollListDict["rollList"].append(roll)
     return rollListDict
 
-def dropRoll(rollList, dropNum):
+def dropRoll(rollListDict, dropNum):
     for x in range(0,dropNum):
-        rollList.remove(min(rollList))
+        #rollListDict["rollTot"] -= min(rollListDict["rollList"])
+        rollListDict["dieNumb"] -= 1
+        rollListDict["rollList"].remove(min(rollListDict["rollList"]))
+
 
 
 if __name__ == "__main__":
@@ -38,7 +40,8 @@ if __name__ == "__main__":
         dieNumb = int(dice[0])
         size = int(dice[1])
         newRollListDict = roll(dieNumb, size)
-        printRollListStats(newRollListDict)
-        #dropRoll(newRollList, 1)
-        #printRollListStats(newRollList)
-        dice = input("\nWhat would you like to roll? (xdy)\n")
+        updateRollListStats(newRollListDict)
+        dropRoll(newRollListDict, 1)
+        updateRollListStats(newRollListDict)
+        #print(newRollListDict.items())
+        dice = input("\n\nWhat would you like to roll? (xdy)\n")
