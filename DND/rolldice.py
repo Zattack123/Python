@@ -16,7 +16,7 @@ def updateRollListStats(rollListDict, printFlag):
         print("Middle Roll: " + str(rollListDict["rollMedian"]))
         print("Dropped Rolls: " + str(rollListDict["dropNum"]))
         print("Your Rolls: "+ str(rollListDict["rollList"])+"\n")
-        print(newRollListDict.items())
+        print(rollListDict.items())
 
 
 def roll(dieNumb, size):
