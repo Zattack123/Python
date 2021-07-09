@@ -15,7 +15,7 @@ def updateRollListStats(rollListDict, printFlag):
         print("Middle Roll: " + str(rollListDict["rollMedian"]))
         print("Dropped Rolls: " + str(rollListDict["dropNum"]))
         print("Your Rolls: "+ str(rollListDict["rollList"])+"\n")
-        print(rollListDict.items())
+        #print(rollListDict.items())
 
 
 def roll(dieNumb, size):
@@ -43,12 +43,18 @@ if __name__ == "__main__":
         size = int(dice[1])
         newRollListDict = roll(dieNumb, size)
         printFlag = input("\nPrint? (y/n) ")
-        if((printFlag=="y") or (printFlag=="Y")):
+        if(printFlag == "q"):
+            print("Bye!")
+            quit()
+        elif((printFlag=="y") or (printFlag=="Y")):
             printFlag2 = True
         else:
             printFlag2 = False
         updateRollListStats(newRollListDict, printFlag2)
         dropNum = input("Drop any Dice? ")
+        if(dropNum == "q"):
+            print("Bye!")
+            quit()
         dropNum = int(dropNum)
         if(dropNum):
             dropRoll(newRollListDict, dropNum)
